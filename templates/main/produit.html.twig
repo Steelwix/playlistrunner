@@ -1,0 +1,7 @@
+<turbo-stream action="update" target="dropdown">
+    <template>
+        <option value="" disabled selected></option>
+        {% for produit in produits %}
+            <option value="{{ produit.id }}">{{produit.name }}</option>
+        {% endfor %}
+        <!-- Add more options as needed --></template></turbo-stream>
