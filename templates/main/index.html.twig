@@ -5,43 +5,35 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 text-center">
                 <h2>From which app you want to grab the playlist?</h2>
-                <div id="the_frame_id" class="btn-group" role="group" aria-label="Inline Buttons">
-                    <button type="button" class="btn btn-primary">Spotify</button>
-                    <button type="button" class="btn btn-secondary">Deezer</button>
-                    <button type="button" class="btn btn-success">Apple Music</button>
-            </div>
             </div>
 
-            <div class="col-2">
-                <a href="{{ path('app_produit_filter', {'filtre': 1}) }}">
-                    <button class="btn btn-success" type="button">Tous les produits</button>
+            <div class="col-4 text-center">
+                <a href="{{ path('app_platform_pick', {'platform': 'spotify'}) }}">
+                    <button class="btn btn-success" type="button">Spotify</button>
                 </a></div>
-            <div class="col-2">
-                <a href="{{ path('app_produit_filter', {'filtre': 2}) }}">
-                    <button class="btn btn-warning" type="button">Physique</button>
+            <div class="col-4 text-center">
+                <a href="{{ path('app_platform_pick', {'platform': 'deezer'}) }}">
+                    <button class="btn btn-warning" type="button">Deezer</button>
                 </a></div>
-            <div class="col-2">
-                <a href="{{ path('app_produit_filter', {'filtre': 3}) }}">
-                    <button class="btn btn-primary" type="button">Voyage</button>
+            <div class="col-4 text-center">
+                <a href="{{ path('app_platform_pick', {'platform': 'applemusic'}) }}">
+                    <button class="btn btn-primary" type="button">Apple Music</button>
                 </a></div>
-            <div class="col-6">
-                <!-- Dropdown List -->
-                <label for="dropdown">Select an option:</label>
-                <select id="dropdown" name="dropdown">
-                    {% for produit in produits %}
-                        <option value="{{ produit.id }}">{{ produit.name }}</option>
-                    {% endfor %}
-                    <!-- Add more options as needed -->
-                </select>
-            </div>
+{#            <div class="col-6">#}
+{#                <!-- Dropdown List -->#}
+{#                <label for="dropdown">Select an option:</label>#}
+{#                <select id="dropdown" name="dropdown">#}
+{#                    {% for produit in produits %}#}
+{#                        <option value="{{ produit.id }}">{{ produit.name }}</option>#}
+{#                    {% endfor %}#}
+{#                    <!-- Add more options as needed -->#}
+{#                </select>#}
+{#            </div>#}
             <turbo-frame id="my-frame">
                 <!-- This content will be replaced or updated -->
             </turbo-frame>
-
-            <a href="/" turbo:click="handleClick">Click me</a>
-            <a href="{{ path('app_main') }}">Traditionnal</a>
 
         </div>
     </div>
