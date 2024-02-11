@@ -30,13 +30,16 @@
                 $cacheItem = $cache->getItem(self::SPOTIFY_TOKEN);
                 $this->token = $tokenReturn->access_token;
                 $cacheItem->set($this->token);
+                $cacheItem->expiresAfter(3600);
                 $cache->save($cacheItem);
             }
 
-            $this->options = ['headers' => ['auth' => $this->token]];
+            $this->options = ['headers' => ['Authorization' => 'Bearer '.$this->token]];
         }
 
         public function getPlaylist($playlistId){
             $response = $this->client->request('GET', self::GET_PLAYLIST.$playlistId, $this->options);
+            return $response->toArray();
+
         }
     }

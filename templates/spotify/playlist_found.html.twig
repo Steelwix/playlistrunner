@@ -1,0 +1,15 @@
+<turbo-stream action="update" target="shareLinkForm">
+    <template>
+        <p style="color:white">Found this one</p>
+        <p> {{ playlist.name }}</p>
+        <img src="{{ playlist.images.0.url }}">
+        <div class="col-4 text-center">
+            <a href="">
+                <button class="btn btn-success" type="button">Yes, it's this one</button>
+            </a></div>
+        <div class="col-4 text-center">
+            <a href="">
+                <button class="btn btn-danger" type="button">Wrong one</button>
+            </a></div>
+    </template>
+</turbo-stream>

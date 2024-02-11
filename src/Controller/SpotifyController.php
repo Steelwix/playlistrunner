@@ -19,15 +19,14 @@
         }
 
         #[Route('/spotify/link', name: 'app_spotify_get_link')]
-        public function spotifyGetLink(Request $request){
+        public function spotifyGetLink(Request $request)
+        {
             $playlistRawLink = $request->query->get('playlistLink');
-            // https://open.spotify.com/playlist/3j5gXW0Lm8l3x6nlGat9JC?si=d44fd5eee20b4884
             $startPos = strpos($playlistRawLink, "playlist/") + strlen("playlist/");
             $endPos = strpos($playlistRawLink, "?");
             $playlistId = substr($playlistRawLink, $startPos, $endPos - $startPos);
-            $this->spotifyService->getPlaylist($playlistId);
-            dd($playlistId);
+            $playlist = $this->spotifyService->getPlaylist($playlistId);
             $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
-            return $this->render('platform/.html.twig');
+            return $this->render('spotify/playlist_found.html.twig', ['playlist' => $playlist]);
         }
     }
