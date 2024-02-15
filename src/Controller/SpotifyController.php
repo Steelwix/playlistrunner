@@ -29,4 +29,20 @@
             $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
             return $this->render('spotify/playlist_found.html.twig', ['playlist' => $playlist]);
         }
+
+//        #[Route('/{playlistPlatform}/playlist/{playlistId}/{accountPlatform}/link', name: 'app_spotify_get_account')]
+//        public function spotifyGetAccount(Request $request, $playlistPlatform, $playlistId, $accountPlatform){
+
+//            $accountRawLink = $request->query->get('accountLink'); //https://open.spotify.com/user/11168150783?si=ffdc02e3b2ff4e54
+//            $startPos = strpos($accountRawLink, "user/") + strlen("user/");
+//            $endPos = strpos($accountRawLink, "?");
+//            $accountId = substr($accountRawLink, $startPos, $endPos - $startPos);
+//            $account = $this->spotifyService->createPlaylist($accountId);
+
+//        }
+
+
+
+
+
     }

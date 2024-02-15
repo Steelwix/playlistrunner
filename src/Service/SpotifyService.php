@@ -9,8 +9,11 @@
 
     class SpotifyService
     {
+        const ENDPOINT = "https://api.spotify.com/v1/";
+        const USERS = "users/";
+
         const GET_TOKEN = "https://accounts.spotify.com/api/token";
-        const GET_PLAYLIST = "https://api.spotify.com/v1/playlists/";
+        const PLAYLISTS = "playlists/";
         const SPOTIFY_TOKEN = 'spotify_token';
         public function __construct(private EntityManagerInterface $em, private HttpClientInterface $client)
         {
@@ -38,8 +41,13 @@
         }
 
         public function getPlaylist($playlistId){
-            $response = $this->client->request('GET', self::GET_PLAYLIST.$playlistId, $this->options);
+            $response = $this->client->request('GET', self::ENDPOINT.self::PLAYLISTS.$playlistId, $this->options);
             return $response->toArray();
 
         }
+
+//        public function createPlaylist($accountId){
+//            $this->options['body'] = ['name'=>"PLAYLISTRUNNER", 'description'=> "My new playlist from PLAYLISTRUNNER", 'public'=>false];
+//            return $this->client->request('POST', self::ENDPOINT.self::USERS.$accountId.self::PLAYLISTS, $this->options);
+//        }
     }

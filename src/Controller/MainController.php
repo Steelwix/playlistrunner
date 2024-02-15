@@ -22,10 +22,24 @@ class MainController extends AbstractController
 
     #[Route('/{platform}', name: 'app_platform_pick')]
     public function platformPick(Request $request, $platform){
-
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
             return $this->render('platform/'.$platform.'.html.twig');
     }
+
+    #[Route('/{platform}/playlist/{playlistId}', name: 'app_account_platform_pick')]
+    public function accountPlatformPick(Request $request, $platform, $playlistId){
+        $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+        return $this->render('account/pick.html.twig', ['platform' => $platform,'playlist' => $playlistId]);
+    }
+
+
+
+    #[Route('/{playlistPlatform}/playlist/{playlistId}/{accountPlatform}', name: 'app_account_pick')]
+    public function accountPick(Request $request, $playlistPlatform, $playlistId, $accountPlatform){
+        $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+        return $this->render('account/'.$accountPlatform.'.html.twig',['platform'=>$playlistPlatform, 'playlist'=>$playlistId]);
+    }
+
 
     //    public function getAllProduits(){
 //        $solid = $this->getProduitsSolid();
