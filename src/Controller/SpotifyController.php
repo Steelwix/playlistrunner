@@ -37,7 +37,9 @@
 
             if($request->query->get('code')){
                 $accountToken = $this->spotifyService->getUser($request->query->get('code'));
-                $response = $this->spotifyService->createPlaylist($accountToken);
+
+                $playlistId = $request->cookies->get('playlistId');
+                $this->spotifyService->createPlaylist($accountToken, $playlistId);
                 $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
                 dd("PLAYLIST CREATED");
 //        return $this->render('account/'.$accountPlatform.'.html.twig',['platform'=>$playlistPlatform, 'playlist'=>$playlistId]);

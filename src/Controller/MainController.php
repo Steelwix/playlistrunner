@@ -39,21 +39,28 @@ class MainController extends AbstractController
     #[Route('/{playlistPlatform}/playlist/{playlistId}/{accountPlatform}', name: 'app_account_pick')]
     public function accountPick(Request $request, $playlistPlatform, $playlistId, $accountPlatform){
 
-        $clientId =  $_ENV['SPOTIFY_ID'];
-        $redirectUri = 'https://localhost:8000/authorize/spotify';
-        $cookiePlaylistPlatform = new Cookie('playlistPlatform', $playlistPlatform);
-        $cookiePlaylistId = new Cookie('playlistId', $playlistId);
-        $cookieAccountPlatform = new Cookie('accountPlatform', $accountPlatform);
-        $authorizeUrl = 'https://accounts.spotify.com/authorize';
-        $authorizeUrl .= '?response_type=code';
-        $authorizeUrl .= '&client_id=' . urlencode($clientId);
-        $authorizeUrl .= '&scope=' . urlencode('user-read-private user-read-email playlist-modify-public playlist-modify-private ');
-        $authorizeUrl .= '&redirect_uri=' . $redirectUri;
-        $response = new RedirectResponse($authorizeUrl);
-        $response->headers->setCookie($cookiePlaylistPlatform);
-        $response->headers->setCookie($cookiePlaylistId);
-        $response->headers->setCookie($cookieAccountPlatform);
-        return $response;
+            switch ($accountPlatform){
+                case 'spotify':
+                    $clientId =  $_ENV['SPOTIFY_ID'];
+                    $redirectUri = 'https://localhost:8000/authorize/spotify';
+                    $cookiePlaylistPlatform = new Cookie('playlistPlatform', $playlistPlatform);
+                    $cookiePlaylistId = new Cookie('playlistId', $playlistId);
+                    $cookieAccountPlatform = new Cookie('accountPlatform', $accountPlatform);
+                    $authorizeUrl = 'https://accounts.spotify.com/authorize';
+                    $authorizeUrl .= '?response_type=code';
+                    $authorizeUrl .= '&client_id=' . urlencode($clientId);
+                    $authorizeUrl .= '&scope=' . urlencode('user-read-private user-read-email playlist-modify-public playlist-modify-private ');
+                    $authorizeUrl .= '&redirect_uri=' . $redirectUri;
+                    $response = new RedirectResponse($authorizeUrl);
+                    $response->headers->setCookie($cookiePlaylistId);
+                    return $response;
+                    break;
+                case 'deezer':
+                    break;
+                case 'applemusic':
+                    break;
+            }
+
 //        $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
 //        return $this->render('account/'.$accountPlatform.'.html.twig',['platform'=>$playlistPlatform, 'playlist'=>$playlistId]);
     }
