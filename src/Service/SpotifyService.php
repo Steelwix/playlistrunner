@@ -13,7 +13,7 @@
         const USERS = "users/";
 
         const GET_TOKEN = "https://accounts.spotify.com/api/token";
-        const PLAYLISTS = "playlists/";
+        const PLAYLISTS = "/playlists";
         const SPOTIFY_TOKEN = 'spotify_token';
         public function __construct(private EntityManagerInterface $em, private HttpClientInterface $client)
         {
@@ -46,8 +46,37 @@
 
         }
 
-//        public function createPlaylist($accountId){
-//            $this->options['body'] = ['name'=>"PLAYLISTRUNNER", 'description'=> "My new playlist from PLAYLISTRUNNER", 'public'=>false];
-//            return $this->client->request('POST', self::ENDPOINT.self::USERS.$accountId.self::PLAYLISTS, $this->options);
-//        }
+        public function getUser($userCode){
+            $body = http_build_query([
+                'code' => $userCode,
+                'redirect_uri' => "https://localhost:8000/authorize/spotify",
+                'grant_type' => 'authorization_code'
+            ]);
+            $options = [ 'headers' => ['Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => 'Basic '. base64_encode($_ENV['SPOTIFY_ID'].":".$_ENV['SPOTIFY_SECRET'])],
+                         'body' => $body];
+            $response = $this->client->request('POST', self::GET_TOKEN, $options);
+            $tokenReturn = json_decode($response->getContent());
+            return $response->toArray();
+        }
+
+        public function createPlaylist($accountToken){
+            $accountDatas = $this->getAccount($accountToken);
+            $body = json_encode(['name'=>"PLAYLISTRUNNER", 'description'=> "My new playlist from PLAYLISTRUNNER", 'public'=>false]);
+            $options = ['headers' => ['Authorization' => 'Bearer '.$accountToken['access_token'], 'Content-Type' => 'application/json'],
+                        'body' => $body];
+
+                $return =  $this->client->request('POST', self::ENDPOINT.self::USERS.$accountDatas['id'].self::PLAYLISTS, $options);
+
+
+
+        }
+
+
+        private function getAccount($accountToken){
+            $options = ['headers' => ['Authorization' => 'Bearer '.$accountToken['access_token']]];
+            $response= $this->client->request('GET', self::ENDPOINT.'me', $options);
+            return $response->toArray();
+
+        }
+
     }

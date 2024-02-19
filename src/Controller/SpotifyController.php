@@ -30,6 +30,19 @@
             return $this->render('spotify/playlist_found.html.twig', ['playlist' => $playlist]);
         }
 
+
+        #[Route('/authorize/spotify', name: 'app_auth_spotify')]
+        public function authorizeSpotify(Request $request)
+        {
+
+            if($request->query->get('code')){
+                $accountToken = $this->spotifyService->getUser($request->query->get('code'));
+                $response = $this->spotifyService->createPlaylist($accountToken);
+                $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+                dd("PLAYLIST CREATED");
+//        return $this->render('account/'.$accountPlatform.'.html.twig',['platform'=>$playlistPlatform, 'playlist'=>$playlistId]);
+            }
+        }
 //        #[Route('/{playlistPlatform}/playlist/{playlistId}/{accountPlatform}/link', name: 'app_spotify_get_account')]
 //        public function spotifyGetAccount(Request $request, $playlistPlatform, $playlistId, $accountPlatform){
 

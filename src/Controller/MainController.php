@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,8 +38,24 @@ class MainController extends AbstractController
 
     #[Route('/{playlistPlatform}/playlist/{playlistId}/{accountPlatform}', name: 'app_account_pick')]
     public function accountPick(Request $request, $playlistPlatform, $playlistId, $accountPlatform){
-        $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
-        return $this->render('account/'.$accountPlatform.'.html.twig',['platform'=>$playlistPlatform, 'playlist'=>$playlistId]);
+
+        $clientId =  $_ENV['SPOTIFY_ID'];
+        $redirectUri = 'https://localhost:8000/authorize/spotify';
+        $cookiePlaylistPlatform = new Cookie('playlistPlatform', $playlistPlatform);
+        $cookiePlaylistId = new Cookie('playlistId', $playlistId);
+        $cookieAccountPlatform = new Cookie('accountPlatform', $accountPlatform);
+        $authorizeUrl = 'https://accounts.spotify.com/authorize';
+        $authorizeUrl .= '?response_type=code';
+        $authorizeUrl .= '&client_id=' . urlencode($clientId);
+        $authorizeUrl .= '&scope=' . urlencode('user-read-private user-read-email playlist-modify-public playlist-modify-private ');
+        $authorizeUrl .= '&redirect_uri=' . $redirectUri;
+        $response = new RedirectResponse($authorizeUrl);
+        $response->headers->setCookie($cookiePlaylistPlatform);
+        $response->headers->setCookie($cookiePlaylistId);
+        $response->headers->setCookie($cookieAccountPlatform);
+        return $response;
+//        $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+//        return $this->render('account/'.$accountPlatform.'.html.twig',['platform'=>$playlistPlatform, 'playlist'=>$playlistId]);
     }
 
 
