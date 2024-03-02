@@ -9,16 +9,6 @@
                 <h2>From which app you want to grab the playlist?</h2>
             </div>
 
-{#            <div class="col-6">#}
-{#                <!-- Dropdown List -->#}
-{#                <label for="dropdown">Select an option:</label>#}
-{#                <select id="dropdown" name="dropdown">#}
-{#                    {% for produit in produits %}#}
-{#                        <option value="{{ produit.id }}">{{ produit.name }}</option>#}
-{#                    {% endfor %}#}
-{#                    <!-- Add more options as needed -->#}
-{#                </select>#}
-{#            </div>#}
             <div class="col-6 text-center">
                 <p>FROM</p>
 
@@ -39,10 +29,8 @@
 
             <div class="col-6 text-center">
                 <p>TO</p>
-                <a href="{{ path('app_account_pick', {'playlistPlatform': 'spotify', 'playlistId':'3j5gXW0Lm8l3x6nlGat9JC', 'accountPlatform':'spotify'}) }}">
-                    <button class="btn btn-success" type="button">SHORTCUT</button>
-                </a></div>
                 <div id="toFormPath"></div>
+                <div id="finalContent"></div>
             </div>
         </div>
     </div>

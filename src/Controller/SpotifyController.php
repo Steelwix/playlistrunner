@@ -41,8 +41,7 @@
                 $playlistId = $request->cookies->get('playlistId');
                 $this->spotifyService->createPlaylist($accountToken, $playlistId);
                 $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
-                dd("PLAYLIST CREATED");
-//        return $this->render('account/'.$accountPlatform.'.html.twig',['platform'=>$playlistPlatform, 'playlist'=>$playlistId]);
+        return $this->render('main/success.html.twig');
             }
         }
 //        #[Route('/{playlistPlatform}/playlist/{playlistId}/{accountPlatform}/link', name: 'app_spotify_get_account')]
