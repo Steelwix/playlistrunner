@@ -1,15 +1,17 @@
 <turbo-stream action="update" target="fromFormPath">
     <template>
-        <p style="color:white">Found this one</p>
-        <p> {{ playlist.name }}</p>
-        <img src="{{ playlist.images.0.url }}">
-        <div class="col-4 text-center">
+        <div class="col-12 text-center mt-5">
+        <h3> {{ playlist.name }}</h3>
+        <img  class="playlist-image" src="{{ playlist.images.0.url }}">
+        </div>
+        <div class="col-12 text-center mt-5">
+
             <a href="{{ path('app_account_platform_pick', {'platform': 'spotify', 'playlistId':playlist.id}) }}">
-                <button class="btn btn-success" type="button">Yes, it's this one</button>
-            </a></div>
-        <div class="col-4 text-center">
+                <button class="spotify-color platform-button m-2" type="button">Yes, it's this one</button>
+            </a>
+
             <a href="{{ path('app_platform_pick', {'platform': 'spotify'}) }}">
-                <button class="btn btn-danger" type="button">Wrong one</button>
+                <button class="spotify-color platform-button m-2" type="button">Wrong one</button>
             </a></div>
     </template>
 </turbo-stream>

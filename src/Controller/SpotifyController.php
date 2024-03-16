@@ -5,6 +5,7 @@
     use App\Service\SpotifyService;
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpClient\Exception\ClientException;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
     use Symfony\UX\Turbo\TurboBundle;
@@ -25,7 +26,12 @@
             $startPos = strpos($playlistRawLink, "playlist/") + strlen("playlist/");
             $endPos = strpos($playlistRawLink, "?");
             $playlistId = substr($playlistRawLink, $startPos, $endPos - $startPos);
-            $playlist = $this->spotifyService->getPlaylist($playlistId);
+            try{
+                $playlist = $this->spotifyService->getPlaylist($playlistId);
+            }
+            catch (ClientException $exception){
+                dd($exception);
+            }
             $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
             return $this->render('spotify/playlist_found.html.twig', ['playlist' => $playlist]);
         }

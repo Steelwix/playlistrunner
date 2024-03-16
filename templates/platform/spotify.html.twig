@@ -1,10 +1,13 @@
 <turbo-stream action="update" target="fromFormPath">
     <template>
-<p style="color:white">Ok for Spotify, then just go on the playlist you want and copy the "Share link" and paste it here</p>
+        <div class="col-12 text-center mt-5">
+<h2 style="color:white">Go on the playlist you want, copy the "Share link" and paste it here</h2>
 
-<form id="linkForm" action="{{ path('app_spotify_get_link') }}">
-    <input type="text" name="playlistLink"><br>
-    <button type="submit">Submit</button>
-</form>
+        <div class="form-container">
+            <form id="linkForm" action="{{ path('app_spotify_get_link') }}">
+                <input type="text" name="playlistLink" placeholder="Enter your playlist link">
+                <button class="spotify-color submit-textglitch platform-button mt-2" type="submit">Submit</button>
+            </form>
+        </div></div>
     </template>
 </turbo-stream>
