@@ -152,14 +152,6 @@ h2,h3{
     }
 }
 
-@media (min-width: 768px) {
-    .platform-button,
-    .platform-button:after {
-        width: 250px;
-        height: 86px;
-        line-height: 88px;
-    }
-}
 
 .form-container {
     max-width: 75%;
@@ -183,4 +175,19 @@ h2,h3{
     max-height: 400px; /* Adjust the maximum height as needed */
     box-shadow: 6px 6px 10px rgba(0, 0, 0, 1); /* Initial shadow */
 
+}
+
+@media (min-width: 290px) {
+    .platform-button,
+    .platform-button:after {
+        width: 250px;
+        height: 86px;
+        line-height: 88px;
+    }
+}
+@media (max-width: 576px) {
+    .playlist-converter-title {
+        font-size: 1rem; /* Adjust the font size for smaller screens */
+        letter-spacing: 10px; /* Adjust the letter spacing for smaller screens */
+    }
 }
