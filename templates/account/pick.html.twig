@@ -1,17 +1,19 @@
 <turbo-stream action="update" target="toFormPath">
     <template>
-        <p>In which app you wanna transfer the playlist?</p>
-        <div class="col-2 text-center">
+        <div class="col-12 mt-5">
+            <h2>In which app you wanna transfer the playlist?</h2>
+        <div class="col-12 text-center mt-5">
             <a href="{{ path('app_account_pick', {'playlistPlatform': platform, 'playlistId': playlist, 'accountPlatform':'spotify'}) }}">
-                <button class="btn btn-success" type="button">Spotify</button>
+                <button class="spotify-color spotify-textglitch platform-button " type="button">Spotify <i class="bi bi-spotify"></i>
+                </button>
             </a></div>
-        <div class="col-2 text-center">
-            <a href="{{ path('app_account_pick', {'playlistPlatform': platform, 'playlistId': playlist, 'accountPlatform':'deezer'}) }}">
-                <button class="btn btn-warning" type="button">Deezer</button>
+        <div class="col-12 text-center mt-5">
+            <a href="">
+                <button class=" deezer-color deezer-textglitch platform-button" type="button">Deezer <i class="bi bi-lock-fill"></i></button>
             </a></div>
-        <div class="col-2 text-center">
-            <a href="{{ path('app_account_pick', {'playlistPlatform': platform, 'playlistId': playlist, 'accountPlatform':'applemusic'}) }}">
-                <button class="btn btn-primary" type="button">Apple Music</button>
-            </a></div>
+        <div class="col-12 text-center mt-5">
+            <a href="">
+                <button class="apple-color apple-textglitch platform-button" type="button">Apple Music <i class="bi bi-lock-fill"></i></button>
+            </a></div></div>
     </template>
 </turbo-stream>

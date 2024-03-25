@@ -8,11 +8,12 @@
             <div class="col-12 text-center mt-5">
                 <div class="vertical-center">
                     <h1 class="playlist-converter-title">PLAYLIST CONVERTER</h1>
-                    <p class="mt-2">Make any playlist your own</p>
+                    <p class="mt-2 sub-title">Make any playlist your own</p>
                 </div>
             </div>
+            {% include "_partials/_flash.html.twig" %}
 
-                <div id="fromFormPath">
+                <div class="col-6" id="fromFormPath">
                     <div class="col-12 text-center mt-5">
                         <h2>Select the playlist's platform you want to get</h2>
 
@@ -30,9 +31,11 @@
                                 <button class="apple-color apple-textglitch platform-button" type="button">Apple Music <i class="bi bi-lock-fill"></i></button>
                             </a></div>
                 </div>
+
+
             </div>
 
-            <div class="col-12 text-center">
+            <div class="col-6 text-center">
                 <div id="toFormPath"></div>
                 <div id="finalContent"></div>
             </div>

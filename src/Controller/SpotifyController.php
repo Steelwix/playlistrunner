@@ -13,10 +13,9 @@
     class SpotifyController extends AbstractController
     {
 
-        public function __construct(private EntityManagerInterface $em, private SpotifyService $spotifyService)
+        public function __construct(private SpotifyService $spotifyService)
         {
-            $this->em = $em;
-            $this->spotifyService = $this->spotifyService;
+            $this->spotifyService = $spotifyService;
         }
 
         #[Route('/spotify/link', name: 'app_spotify_get_link')]
@@ -26,43 +25,40 @@
             $startPos = strpos($playlistRawLink, "playlist/") + strlen("playlist/");
             $endPos = strpos($playlistRawLink, "?");
             $playlistId = substr($playlistRawLink, $startPos, $endPos - $startPos);
-            try{
+            try {
                 $playlist = $this->spotifyService->getPlaylist($playlistId);
-            }
-            catch (ClientException $exception){
-                dd($exception);
+            } catch (ClientException $exception) {
+                $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+                return $this->render('platform/spotify.html.twig', ['error' => $exception, 'content' => $playlistRawLink]);
             }
             $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
             return $this->render('spotify/playlist_found.html.twig', ['playlist' => $playlist]);
         }
 
-
+//        CETTE ROUTE EST ACCESSIBLE PAR LE CALLBACK SPOTIFY
         #[Route('/authorize/spotify', name: 'app_auth_spotify')]
         public function authorizeSpotify(Request $request)
         {
-
-            if($request->query->get('code')){
+            if ($request->query->get('code')) {
                 $accountToken = $this->spotifyService->getUser($request->query->get('code'));
-
                 $playlistId = $request->cookies->get('playlistId');
-                $this->spotifyService->createPlaylist($accountToken, $playlistId);
-                $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
-        return $this->render('main/success.html.twig');
+                $playlistPlatform = $request->cookies->get('playlistPlatform');
+                try {
+                    switch ($playlistPlatform) {
+                        case 'spotify':
+                           $this->spotifyService->createPlaylist($accountToken, $playlistId);
+                            break;
+                        case 'deezer':
+                            break;
+                        case 'applemusic':
+                            break;
+                    }
+                } catch (\Exception $e) {
+                    return $this->redirectToRoute('app_main', ['createdPlaylist'=>'error']);
+
+                }
             }
+            return $this->redirectToRoute('app_main', ['createdPlaylist'=>'success']);
         }
-//        #[Route('/{playlistPlatform}/playlist/{playlistId}/{accountPlatform}/link', name: 'app_spotify_get_account')]
-//        public function spotifyGetAccount(Request $request, $playlistPlatform, $playlistId, $accountPlatform){
-
-//            $accountRawLink = $request->query->get('accountLink'); //https://open.spotify.com/user/11168150783?si=ffdc02e3b2ff4e54
-//            $startPos = strpos($accountRawLink, "user/") + strlen("user/");
-//            $endPos = strpos($accountRawLink, "?");
-//            $accountId = substr($accountRawLink, $startPos, $endPos - $startPos);
-//            $account = $this->spotifyService->createPlaylist($accountId);
-
-//        }
-
-
-
-
 
     }

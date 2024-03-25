@@ -17,8 +17,18 @@ class MainController extends AbstractController
     const DEEZER = 'deezer';
     const APPLE_MUSIC = 'applemusic';
     #[Route('/', name: 'app_main')]
-    public function index(): Response
+    public function index(Request $request) : Response
     {
+        if($request->query->get('createdPlaylist')){
+            switch ($request->query->get('createdPlaylist')){
+                case 'success':
+                    $this->addFlash('success', 'You own a new playlist');
+                    break;
+                case 'error':
+                    $this->addFlash('error', 'Something went off when creating the playlist');
+                    break;
+            }
+        }
         return $this->render('main/index.html.twig');
     }
 
@@ -45,14 +55,15 @@ class MainController extends AbstractController
                     $redirectUri = 'https://localhost:8000/authorize/spotify';
                     $cookiePlaylistPlatform = new Cookie('playlistPlatform', $playlistPlatform);
                     $cookiePlaylistId = new Cookie('playlistId', $playlistId);
-                    $cookieAccountPlatform = new Cookie('accountPlatform', $accountPlatform);
                     $authorizeUrl = 'https://accounts.spotify.com/authorize';
                     $authorizeUrl .= '?response_type=code';
                     $authorizeUrl .= '&client_id=' . urlencode($clientId);
                     $authorizeUrl .= '&scope=' . urlencode('user-read-private user-read-email playlist-modify-public playlist-modify-private ');
                     $authorizeUrl .= '&redirect_uri=' . $redirectUri;
                     $response = new RedirectResponse($authorizeUrl);
+                    //EN DIRECTION DE LA CONNEXION A SPOTIFY
                     $response->headers->setCookie($cookiePlaylistId);
+                    $response->headers->setCookie($cookiePlaylistPlatform);
                     return $response;
                     break;
                 case 'deezer':
@@ -61,69 +72,7 @@ class MainController extends AbstractController
                     break;
             }
 
-//        $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
-//        return $this->render('account/'.$accountPlatform.'.html.twig',['platform'=>$playlistPlatform, 'playlist'=>$playlistId]);
     }
 
-
-    //    public function getAllProduits(){
-//        $solid = $this->getProduitsSolid();
-//        $liquid = $this->getProduitsLiquid();
-//        return array_merge($solid, $liquid);
-//    }
-//
-//    public function getProduitsSolid(){
-//        return $produits = array(
-//            array('id' => 1, 'name' => 'T-shirt'),
-//            array('id' => 2, 'name' => 'Pantalon'),
-//            array('id' => 3, 'name' => 'Chaussures'),
-//            array('id' => 4, 'name' => 'Casquette'));
-//    }
-//
-//    public function getProduitsLiquid(){
-//        return $voyages = array(
-//            array('id' => 1, 'name' => 'Voyage à Paris'),
-//            array('id' => 2, 'name' => 'Escapade à Bali'),
-//            array('id' => 3, 'name' => 'Aventure en Amazonie'),
-//            array('id' => 4, 'name' => 'Safari en Afrique'),
-//            array('id' => 5, 'name' => 'Croisière dans les Caraïbes'));
-//    }
-//
-//    public function getThroughFilter($filter){
-//        switch ($filter){
-//            case 1:
-//                return $this->getAllProduits();
-//                break;
-//            case 2:
-//                return $this->getProduitsSolid();
-//                break;
-//            case 3:
-//                return $this->getProduitsLiquid();
-//        }
-//    }
-//    #[Route('/produit/ajax/filter/{filtre}', name: 'app_produit_filter')]
-//    public function filtrerLesProduits(Request $request, $filtre)
-//    {
-//        if($filtre == 10){
-//            $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
-//            return $this->render('dashboard/index.html.twig');
-//        }
-//        $products = $this->getThroughFilter($filtre);
-//
-//        $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
-//        return $this->render('main/produit.html.twig', ['produits' => $products]);
-//    }
-//
-//    #[Route('/produit/ajax/declinaison/{produit}', name: 'app_produit_declinaison')]
-//    public function getDeclinaisonList(Request $request, $produit)
-//    {
-//        if(in_array($produit, $this->getProduitsSolid())){
-//            dd("objet");
-//        }
-//        dd("liquid");
-//
-//        $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
-//        return $this->render('main/produit.html.twig', ['produits' => $products]);
-//    }
 
 }
