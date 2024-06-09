@@ -38,8 +38,18 @@
 </head>
 
 <body class="bg-dark text-light">
+{% include "_partials/_flash.html.twig" %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    {% endblock %}
+
+{% include "_partials/_footer.html.twig" %}
+{#<div class="container">#}
+{#    <div class="row">#}
+{#        <div class="col-12 mt-5"><a href="{{ path('app_legal') }}">Legal notice</a></div>#}
+{#    </div>#}
+{#</div>#}
+
 </body>
 </html>
 {% block javascripts %}{% endblock %}
