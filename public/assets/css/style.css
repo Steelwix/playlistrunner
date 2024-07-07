@@ -3,6 +3,9 @@
     font-weight: 400;
     font-style: normal;
     letter-spacing: 20px; /* Adjust the value as needed */
+    color: white;
+    text-decoration: none;
+
 
 }
 .sub-title{
