@@ -6,6 +6,7 @@
     use Doctrine\ORM\EntityManagerInterface;
     use Psr\Cache\InvalidArgumentException;
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+    use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
     use Symfony\Contracts\Cache\ItemInterface;
     use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
     use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -67,7 +68,6 @@
         {
             $response = $this->client->request('GET', self::ENDPOINT . self::PLAYLISTS . '/' . $playlistId, $this->options);
             return $response->toArray();
-
         }
 
         /**
@@ -79,13 +79,19 @@
          */
         public function getUser($userCode): array
         {
+            $uri = 'https://playlistconverter.org/authorize/spotify';
+            if($_ENV['APP_ENV']=='dev'){
+                $uri = 'http://localhost:8000/authorize/spotify';
+            }
             $body = http_build_query([
                                          'code'         => $userCode,
-                                         'redirect_uri' => "https://localhost:8000/authorize/spotify",
+                                         'redirect_uri' => $uri,
                                          'grant_type'   => 'authorization_code'
                                      ]);
-            $options = ['headers' => ['Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => 'Basic ' . base64_encode($_ENV['SPOTIFY_ID'] . ":" . $_ENV['SPOTIFY_SECRET'])],
-                        'body'    => $body];
+            $options = [
+                'headers' => ['Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => 'Basic ' . base64_encode($_ENV['SPOTIFY_ID'] . ":" . $_ENV['SPOTIFY_SECRET'])],
+                'body'    => $body
+            ];
             $response = $this->client->request('POST', self::GET_TOKEN, $options);
             $tokenReturn = json_decode($response->getContent());
             return $response->toArray();
@@ -104,8 +110,10 @@
             $playlist = $this->getPlaylist($playlistId);
             $tracks = $this->getTracks($playlist['id']);
             $body = json_encode(['name' => $playlist['name'] . ' - PLAYLIST CONVERTER', 'description' => $playlist['description'] . ' - Made by PLAYLIST CONVERTER', 'public' => true]);
-            $options = ['headers' => ['Authorization' => 'Bearer ' . $accountToken['access_token'], 'Content-Type' => 'application/json'],
-                        'body'    => $body];
+            $options = [
+                'headers' => ['Authorization' => 'Bearer ' . $accountToken['access_token'], 'Content-Type' => 'application/json'],
+                'body'    => $body
+            ];
 
             $rawNewPlaylist = $this->client->request('POST', self::ENDPOINT . self::USERS . '/' . $accountDatas['id'] . '/' . self::PLAYLISTS, $options);
             $newPlaylist = $rawNewPlaylist->toArray();
@@ -120,8 +128,10 @@
                     $processed++;
                     $i = 0;
                     $body = json_encode($uris);
-                    $trackOptions = ['headers' => ['Authorization' => 'Bearer ' . $accountToken['access_token'], 'Content-Type' => 'application/json'],
-                                     'body'    => $body];
+                    $trackOptions = [
+                        'headers' => ['Authorization' => 'Bearer ' . $accountToken['access_token'], 'Content-Type' => 'application/json'],
+                        'body'    => $body
+                    ];
                     $this->client->request('POST', self::ENDPOINT . self::PLAYLISTS . '/' . $newPlaylist['id'] . '/' . self::TRACKS, $trackOptions);
                     $uris = [];
                 }
@@ -159,8 +169,6 @@
                 }
             }
             return $tracks;
-
-
         }
 
 
@@ -176,8 +184,5 @@
             $options = ['headers' => ['Authorization' => 'Bearer ' . $accountToken['access_token']]];
             $response = $this->client->request('GET', self::ENDPOINT . 'me', $options);
             return $response->toArray();
-
         }
-
-
     }
