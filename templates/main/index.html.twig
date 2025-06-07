@@ -3,16 +3,17 @@
 {% block title %}PLAYLIST CONVERTER{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div style="min-height: 70vh" class="container">
         <div class="row">
             <div class="col-12 text-center mt-5">
                 <div class="vertical-center">
                     <a class="playlist-converter-title" href="{{ path('app_main') }}"><h1 class="playlist-converter-title m-auto">PLAYLIST CONVERTER</h1></a>
-                    <p class="mt-2 sub-title">Make any playlist your own</p>
+                    <p class="mt-2 sub-title">Download any playlist so you can listen and edit it as you want</p>
                 </div>
             </div>
 
-            <div class="col-lg-6 col-12" id="fromFormPath">
+            <div style="margin-top: 10%" class="col-lg-6" id="fromFormPath">
+
                 <div class="col-12 text-center mt-5">
                     <h2>Select the playlist's platform you want to get</h2>
 
@@ -22,27 +23,69 @@
                                         class="bi bi-spotify"></i>
                             </button>
                         </a></div>
-                    <div class="col-12 text-center mt-5">
-                        <a href="">
-                            <button class=" deezer-color deezer-textglitch platform-button" type="button">Deezer <i
-                                        class="bi bi-lock-fill"></i></button>
-                        </a></div>
-                    <div class="col-12 text-center mt-5">
-                        <a href="">
-                            <button class="apple-color apple-textglitch platform-button" type="button">Apple Music <i
-                                        class="bi bi-lock-fill"></i></button>
-                        </a></div>
+{#                    <div class="col-12 text-center mt-5">#}
+{#                        <a href="">#}
+{#                            <button class=" deezer-color deezer-textglitch platform-button" type="button">Deezer <i#}
+{#                                        class="bi bi-lock-fill"></i></button>#}
+{#                        </a></div>#}
+{#                    <div class="col-12 text-center mt-5">#}
+{#                        <a href="">#}
+{#                            <button class="apple-color apple-textglitch platform-button" type="button">Apple Music <i#}
+{#                                        class="bi bi-lock-fill"></i></button>#}
+{#                        </a></div>#}
                 </div>
 
 
             </div>
 
-            <div class="col-6 text-center">
+            <div style="margin-top: 10%"  class="col-6 text-center">
                 <div id="toFormPath"></div>
                 <div id="finalContent"></div>
             </div>
+
         </div>
     </div>
+
+
+            <div style="background-color: #2c142c; margin-top: 50px">
+                <div class="container">
+                    <div class="row">
+                        <h2 class="col-12 text-center playlist-converter-title">About Playlist Converter</h2>
+                        <p class="col-12 mt-4">
+                            Playlist Converter is a free tool that helps music lovers share and convert playlists across different music streaming platforms. Whether you're switching from Spotify to another service, or just want to share a playlist with a friend using a different app, Playlist Converter simplifies the process in a few clicks.
+                        </p>
+
+                        <p class="col-12">
+                            No registration is required, and we do not store or track any of your personal data. All conversions are handled through secure API calls, and you always stay in control of your accounts.
+                        </p>
+
+                        <h3 class="col-12 mt-4">How does it work?</h3>
+                        <ol class="col-12">
+                            <li>Select the platform where your playlist is hosted.</li>
+                            <li>Paste the link to your playlist.</li>
+                            <li>Choose the target platform you want to transfer it to.</li>
+                            <li>You’ll be asked to log in securely to authorize the transfer.</li>
+                            <li>Once logged in, the playlist will be recreated on the target platform.</li>
+                        </ol>
+
+                        <h3 class="col-12 mt-4">Why use Playlist Converter?</h3>
+                        <ul class="col-12">
+                            <li>Cross-platform sharing made simple</li>
+                            <li>No tracking, no storage of user data</li>
+                            <li>Made by a single indie developer</li>
+                        </ul>
+
+                        <h3 class="col-12 mt-4">Current status</h3>
+                        <p class="col-12">
+                            At this stage, only Spotify is fully supported. This is a personal project under development. More platforms will be added gradually. Thanks for your patience and support!
+                        </p>
+
+                        <p class="col-12">
+                            Project by <a href="https://www.instagram.com/steelwix" target="_blank">Steelwix</a>
+                        </p>
+
+                    </div></div></div>
+
 
 
 {% endblock %}
