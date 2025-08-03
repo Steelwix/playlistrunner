@@ -1,0 +1,20 @@
+<turbo-stream action="update" target="fromFormPath">
+    <template>
+        <div class="col-12 mt-5">
+            <h3 style="color:white">Go on the playlist you want, copy the "Share link" and paste it here</h3>
+
+            <div class="form-container d-flex justify-content-center">
+                {% if error  is defined %}
+                    <p style="color:lightcoral">Apple Music returns no playlist with this share link, check if it's
+                        correct</p>
+                {% endif %}
+                <form id="linkForm" action="{{ path('app_apple_get_link') }}">
+                    <input {% if error is defined %}style="background-color:#FFCCCC"{% endif %} type="text"
+                           name="playlistLink"
+                           placeholder="Enter your playlist link" {% if content is defined %}value="{{ content }}"{% endif %}>
+                    <button class="spotify-color submit-textglitch platform-button mt-2" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </template>
+</turbo-stream>

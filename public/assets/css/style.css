@@ -61,10 +61,12 @@ h2,h3{
 }
 /*fc3c44*/
 .apple-color {
-    background: linear-gradient(45deg, transparent 5%, #6b6b6b  5%); /* Change button color */
+    background: linear-gradient(45deg, transparent 5%, #042985 5%); /* Change button color */
+
 }
 .apple-color:after {
-    background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #6b6b6b  5%);
+    background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #A4036F 5%);
+
 }
 .platform-button,
 .platform-button:after {
@@ -108,53 +110,6 @@ h2,h3{
 /*    animation-timing-function: steps(2, end);*/
 /*}*/
 
-@keyframes glitch {
-    0% {
-        clip-path: var(--slice-1);
-        transform: translate(-20px, -10px);
-    }
-    10% {
-        clip-path: var(--slice-3);
-        transform: translate(10px, 10px);
-    }
-    20% {
-        clip-path: var(--slice-1);
-        transform: translate(-10px, 10px);
-    }
-    30% {
-        clip-path: var(--slice-3);
-        transform: translate(0px, 5px);
-    }
-    40% {
-        clip-path: var(--slice-2);
-        transform: translate(-5px, 0px);
-    }
-    50% {
-        clip-path: var(--slice-3);
-        transform: translate(5px, 0px);
-    }
-    60% {
-        clip-path: var(--slice-4);
-        transform: translate(5px, 10px);
-    }
-    70% {
-        clip-path: var(--slice-2);
-        transform: translate(-10px, 10px);
-    }
-    80% {
-        clip-path: var(--slice-5);
-        transform: translate(20px, -10px);
-    }
-    90% {
-        clip-path: var(--slice-1);
-        transform: translate(-10px, 0px);
-    }
-    100% {
-        clip-path: var(--slice-1);
-        transform: translate(0);
-    }
-}
-
 
 .form-container {
     max-width: 75%;
@@ -195,7 +150,7 @@ h2,h3{
 
 .footer {
     margin-top: 10%;
-    background-color: #0f0f18;
+    background-color: #212529;
     color: #fff;
     padding: 20px;
     text-align: center;
